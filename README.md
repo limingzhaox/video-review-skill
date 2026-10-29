@@ -14,26 +14,29 @@
 
 产出：一份 Markdown 诊断报告（按视频文件名或主题命名）+ 对话内摘要。
 
-## 安装
+## 安装（一条命令）
 
-### WorkBuddy / WorkBuddy 系 agent
+本仓库根目录**本身就是 skill 目录**，直接克隆到你的 skills 目录即可：
 
-1. 下载 `video-review-skill.zip` 解压
-2. 把 `video-review/` 整个目录放进 skills 目录：
-   - 用户级：`~/.workbuddy/skills/`
-   - 项目级：`.workbuddy/skills/`
-3. 重启会话后即可触发
-
-也可以直接克隆本仓库后复制目录：
+**macOS / Linux**
 
 ```bash
-git clone https://github.com/limingzhaox/video-review-skill.git
-cp -r video-review-skill/video-review ~/.workbuddy/skills/
+git clone --depth 1 https://github.com/limingzhaox/video-review-skill.git ~/.workbuddy/skills/video-review
 ```
 
-### 其他 agent 平台
+**Windows PowerShell**
 
-把 `video-review/` 目录放到该平台的 skills 目录即可。`SKILL.md` 的 YAML frontmatter 里带 `name` 和 `description`，符合通用 skill 规范。
+```powershell
+git clone --depth 1 https://github.com/limingzhaox/video-review-skill.git "$env:USERPROFILE\.workbuddy\skills\video-review"
+```
+
+其他 agent 平台同理：克隆到该平台的 skills 目录下，`SKILL.md` 的 YAML frontmatter 带 `name` 和 `description`，符合通用 skill 规范。
+
+> 说明：skill 必须落在 agent 本地的 skills 目录才会被加载，无法直接远程引用 GitHub 仓库。仓库用于分发和版本管理，克隆是安装动作。
+
+不想用命令行也可以：GitHub 页面 **Code → Download ZIP**，解压后把文件夹改名为 `video-review` 放进 skills 目录。
+
+安装后重启会话即可触发。
 
 ## 使用
 
@@ -65,7 +68,7 @@ cp -r video-review-skill/video-review ~/.workbuddy/skills/
 ## 目录结构
 
 ```
-video-review/
+video-review/            (仓库根目录即 skill 目录)
 ├── SKILL.md                        # 主流程：四步工作流 + 五条铁律 + 三条禁忌
 ├── scripts/
 │   └── video_inspect.py            # 元数据 + 抽帧 + 提音频（自动探测 ffmpeg，cv2 兜底）
